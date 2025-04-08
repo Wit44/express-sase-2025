@@ -2,7 +2,7 @@ import { IsNull } from "typeorm";
 import { AppDataSource } from "../db";
 import { User } from "../entities/User";
 import type { LoginModel } from "../models/login.model";
-import bcrypt, { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import type { Response } from "express";
 import type { RegisterModel } from "../models/register.model";
@@ -34,7 +34,7 @@ export class UserService {
     }
 
     static async verifyToken(req: any, res: Response, next: Function) {
-        const whitelist = ['/api/user/login', '/api/user/register', '/api/user/refresh']
+        const whitelist = ['/api/user/login', '/api/user/refresh', '/api/user/register']
 
         if (whitelist.includes(req.path)) {
             next()
@@ -64,7 +64,6 @@ export class UserService {
             req.user = user
             next()
         })
-
     }
 
     static async refreshToken(token: string) {
@@ -78,12 +77,12 @@ export class UserService {
 
         return {
             name: user?.email,
-            access: jwt.sign(payload,tokenSecret, { expiresIn: accessTTL }),
+            access: jwt.sign(payload, tokenSecret, { expiresIn: accessTTL }),
             refresh: token
         }
     }
 
-    static async register(model: RegisterModel){
+    static async register(model: RegisterModel) {
         const data = await repo.existsBy({
             email: model.email,
             deletedAt: IsNull()
@@ -99,8 +98,6 @@ export class UserService {
             name: model.name
         })
     }
-
-    //static async changePassword()
 
     static async getUserByEmail(email: string) {
         const data = repo.findOne({
