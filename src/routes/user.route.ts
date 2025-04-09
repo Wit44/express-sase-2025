@@ -31,6 +31,7 @@ UserRoute.post('/refresh', async(req, res) => {
         const token = auth && auth.split(' ')[1]
         res.json(await UserService.refreshToken(token!))
     } catch (e: any) {
+        console.log(e)
         res.status(401).json({
             message: e.message,
             timestamp: new Date()

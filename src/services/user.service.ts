@@ -77,7 +77,7 @@ export class UserService {
 
         return {
             name: user?.email,
-            access: jwt.sign(payload, tokenSecret, { expiresIn: accessTTL }),
+            access: jwt.sign(payload, tokenSecret!, { expiresIn: accessTTL }),
             refresh: token
         }
     }
