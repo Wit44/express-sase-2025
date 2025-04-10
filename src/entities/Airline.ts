@@ -12,9 +12,15 @@ export class Airline {
   @Column("varchar", { name: "website", length: 255 })
   website: string;
 
-  @Column("bool", { name: "active", default: () => "'true'" })
-  active: boolean;
+  @Column("datetime", { name: "created_at" })
+  createdAt: Date;
 
-  @OneToMany(() => Ticket, (ticket) => ticket.airlane)
+  @Column("datetime", { name: "updated_at", nullable: true })
+  updatedAt: Date | null;
+
+  @Column("datetime", { name: "deleted_at", nullable: true })
+  deletedAt: Date | null;
+
+  @OneToMany(() => Ticket, (ticket) => ticket.airline)
   tickets: Ticket[];
 }
