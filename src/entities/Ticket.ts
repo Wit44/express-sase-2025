@@ -25,8 +25,8 @@ export class Ticket {
   @Column("int", { name: "user_id", unsigned: true })
   userId: number;
 
-  @Column("tinyint", { name: "paid", unsigned: true })
-  paid: number;
+  @Column("datetime", { name: "paid_at", nullable: true })
+  updatedAt: Date | null;
 
   @Column("datetime", { name: "created_at" })
   createdAt: Date;
